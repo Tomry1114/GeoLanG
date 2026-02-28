@@ -1,0 +1,77 @@
+DATA:
+  dataset: OCID-VLG
+  root_path: /mnt/data1_hdd/wgk/tr-naturecommucation/unet/OCID-VLG
+  train_split: train
+  val_split: val
+
+TRAIN:
+  # Base Arch
+  clip_pretrain: /mnt/data1_hdd/wgk/tr-naturecommucation/unet/CROG/exp/pretrain_clip/ViT-B-16.pt # 使用 CLIP-ViT 的预训练权重
+  version: multiple
+  input_size: 416
+  word_len: 17
+  word_dim: 512
+
+  vis_dim: 512  # ViT-B/16 的特征维度
+
+  fpn_in: [768, 768, 768]  # 多尺度输入来自不同 ViT 层
+  fpn_out: [256, 512, 1024]
+
+  sync_bn: True
+
+  # Decoder
+  num_layers: 3
+  num_head: 8
+  dim_ffn: 2048
+  dropout: 0.1
+  intermediate: False
+
+  # Training Setting
+  workers: 2
+  workers_val: 2
+  epochs: 40
+  milestones: [10]
+  start_epoch: 0
+  batch_size: 16
+  batch_size_val: 16
+  base_lr: 0.00001
+  lr_decay: 0.5
+  lr_multi: 1
+  weight_decay: 0.
+  max_norm: 0.
+  manual_seed: 0
+  print_freq: 100
+
+  # Resume & Save
+  exp_name: CROG_multiple_ViT_B_16
+  output_folder: /mnt/data1_hdd/wgk/tr-naturecommucation/unet/CROG/exp/OCID-VLG_multiple_ViT_new
+  save_freq: 1
+  resume: "/mnt/data1_hdd/wgk/tr-naturecommucation/unet/CROG/exp/OCID-VLG_multiple_ViT/CROG_multiple_ViT_B_16/best_jindex_model.pth"
+  #resume: ''
+  evaluate: True
+
+
+  #Resume & Save断点续训
+  #exp_name: CROG_multiple_ViT_B_16
+  #output_folder: /mnt/data1_hdd/wgk/tr-naturecommucation/unet/CROG/exp/OCID-VLG_multiple_ViT_new
+  #save_freq: 1
+  #resume: "/mnt/data1_hdd/wgk/tr-naturecommucation/unet/CROG/exp/OCID-VLG_multiple_ViT/CROG_multiple_ViT_B_16/last_model.pth"
+  #evaluate: False   # 关闭 eval-only 模式
+  #start_epoch: 15   # 从第15轮继续
+  #epochs: 30        # 设置新的总训练轮数，比如训练到30轮
+
+  # Ablation study
+  use_contrastive: True
+  use_pretrained_clip: True
+  use_grasp_masks: True
+
+Distributed:
+  dist_url: tcp://localhost:3681
+  dist_backend: 'nccl'
+  multiprocessing_distributed: True
+  world_size: 1
+  rank: 0
+
+TEST:
+  test_split: val-test
+  visualize: False
