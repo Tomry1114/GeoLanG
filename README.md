@@ -8,7 +8,7 @@ Extensive experiments on the OCID-VLG dataset, as well as in both simulation and
 <p align="center">
   <img
     width="1000"
-    src=".method.png"
+    src="./method.png"
   >
 </p>
 
