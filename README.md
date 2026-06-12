@@ -12,14 +12,6 @@ Extensive experiments on the OCID-VLG dataset, as well as in both simulation and
   >
 </p>
 
-## Release Status
-
-Please note that this repository is still under active organization and has not been fully released yet. The currently released code mainly provides the ViT-based implementation and corresponding results for easier reproduction and reference. The full CLIP-VMamba version used for the main results in the paper, including complete training configurations, pretrained weight loading instructions, and additional implementation details, is still being cleaned and verified.
-
-We will continue to update this repository with the complete codebase, configuration files, model weights, and detailed reproduction instructions. Thank you for your patience and interest in our work.
-
-
-
 
 ## Citation
 
