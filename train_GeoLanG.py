@@ -110,9 +110,9 @@ def main_worker(gpu, args):
     dist.barrier()
 
     # build model
-    # model, param_list = build_crog(args)            # original CROG baseline (CLIP-ResNet)
-    # model, param_list = build_crog_vit(args)         # ViT baseline (CROGVIT)
-    model, param_list = build_geolang(args)             # GeoLanG full method (VMamba+DGGM+ADCI)
+    # model, param_list = build_crog(args)
+    # model, param_list = build_crog_vit(args)
+    model, param_list = build_geolang(args)
     if args.sync_bn:
         model = nn.SyncBatchNorm.convert_sync_batchnorm(model)
     logger.info(model)
