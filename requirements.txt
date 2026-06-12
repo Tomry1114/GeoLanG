@@ -65,3 +65,10 @@ urllib3==1.26.15
 wandb==0.15.2
 wcwidth==0.2.6
 zipp==3.15.0
+# --- VMamba (CLIP-Mamba VSSM) backbone deps ---
+einops
+timm
+fvcore
+# Optional (GPU only): compiled selective_scan kernels for forward_type v2/v3.
+# Build from mamba-clip/kernels/selective_scan (pip install -e .). Not needed for
+# vmamba_forward_type=v2pt (portable pure-pytorch fallback).

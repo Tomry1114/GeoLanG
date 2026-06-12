@@ -14,6 +14,22 @@ TRAIN:
 
   vis_dim: 512  # ViT-B/16 的特征维度
 
+  # Text encoder: 'bert' = paper's CLIP-BERT (§II-A), 'clip' = CLIP text transformer.
+  # 'bert' needs: pip install transformers + dataset tokenized with BERT WordPiece + weights below.
+  text_encoder: clip
+  bert_pretrain: google-bert/bert-base-uncased   # HF id or local path; paper cite [22]=ClipBERT (jayleicn/ClipBERT)
+
+  # Vision backbone: 'vmamba' (ported CLIP-Mamba VSSM, paper §II-A) or 'vit' (CLIP-ViT).
+  # The CLIP text encoder is used for the language branch in both cases.
+  vision_backbone: vmamba
+  vmamba_size: tiny            # tiny | small | base  (matches CLIP-Mamba vssm1 presets)
+  vmamba_out_dim: 768          # channels each scale is projected to (DGGM/ADCI width)
+  vmamba_forward_type: v2pt    # v2pt: portable pure-pytorch scan (CPU/no-kernel);
+                               # v2/v3/v3noz: compiled selective_scan CUDA kernels (GPU)
+  vmamba_pretrain: ''          # path to a CLIP-Mamba VSSM checkpoint (weiquan/mamba-clip).
+                               # Empty -> VSSM randomly initialised. Set this to init the
+                               # visual encoder with pretrained CLIP-VMamba (paper §III-A).
+
   fpn_in: [768, 768, 768]  # 多尺度输入来自不同 ViT 层
   fpn_out: [256, 512, 1024]
 
